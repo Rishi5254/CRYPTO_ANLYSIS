@@ -26,6 +26,7 @@ def find_api():
                 api_key = api
                 is_found = False
                 break
+    print(api_key)
     return api_key
 
 
@@ -58,16 +59,15 @@ def extract_data(day, month, year, query, query_type):
     last_page = 6
     all_data = []
     api_key = find_api()
+    print(api_key)
     if query_type:
         last_page = end_page(day, month, year, query)
     for page in range(1, last_page):
         for i in range(1, 3):
-            print(f"page no : {page}")
             if i == 1:
                 sort = "relevancy"
             else:
                 sort = "popularity"
-            print(f"{sort}")
             url = "https://newsapi.org/v2/everything?"
             parameters = {
                 "q": f"{query}",
@@ -78,10 +78,14 @@ def extract_data(day, month, year, query, query_type):
                 "sortBy": sort,
                 "page": f"{page}"
             }
-            response = requests.get(url=url, params=parameters).json()['articles']
+            try:
+                response = requests.get(url=url, params=parameters).json()['articles']
+            except KeyError:
+                new_api = find_api()
+                api_key = new_api
+                response = requests.get(url=url, params=parameters).json()['articles']
             all_data += response
-            print(all_data)
     return all_data
 
 
-
+print(extract_data(19, 1, 2022, "nft", True))
