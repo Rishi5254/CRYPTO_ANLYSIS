@@ -1,33 +1,52 @@
 import urllib.request
+from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 from bs4 import BeautifulSoup
 
 
-def content_extractor(url):
-    try:
-        html = urllib.request.urlopen(url)
-        soup = BeautifulSoup(html, "lxml")
+def extracter(url):
+    req = Request(url, headers={'User-Agent': 'XYZ/3.0'})
+    webpage = urlopen(req, timeout=10).read()
+    webpage = webpage.decode('utf-8')
+    soup = BeautifulSoup(webpage, "lxml")
+    data = ""
+    for para in soup.find_all("p"):
+        data += para.get_text()
+        data += "\n"
+    for para in soup.find_all("h2"):
+        data += para.get_text()
+        data += "\n"
+    for para in soup.find_all("h2"):
+        data += para.get_text()
+        data += "\n"
+    for para in soup.find_all("h2"):
+        data += para.get_text()
+        data += "\n"
+    return data
 
-        data = ""
-        for para in soup.find_all("p"):
-            data += para.get_text()
-            data += "\n"
-        for para in soup.find_all("h2"):
-            data += para.get_text()
-            data += "\n"
-        for para in soup.find_all("h2"):
-            data += para.get_text()
-            data += "\n"
-        for para in soup.find_all("h2"):
-            data += para.get_text()
-            data += "\n"
-        return data
+
+def content_extractor(url):
+    url = f"{url}"
+    try:
+        content = extracter(url)
+        return content
+
     except urllib.error.HTTPError as err:
-        return f"{err.code} : Invalid URL"
+        try:
+            content = extracter(url)
+            return content
+        except:
+            return f"{err.code}"
 
     except urllib.error.URLError as err:
-        return f"{err} : Invalid URL"
+        try:
+            content = extracter(url)
+            return content
+        except:
+            return f"{err} : Invalid URL"
     except:
-        return "Invalid url"
-
-print(content_extractor("https://economictimes.indiatimes.com/markets/cryptocurrency/top-cryptocurrency-prices-today-bitcoin-ethereum-slip-cardano-zooms-7/articleshow/88964726.cms"))
+        try:
+            content = extracter(url)
+            return content
+        except:
+            return "Invalid url"

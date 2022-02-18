@@ -60,7 +60,6 @@ def extract_data(day, month, year, query, query_type):
     api_key = find_api()
     if query_type:
         last_page = end_page(day, month, year, query)
-        print(last_page)
     for page in range(1, last_page):
         for i in range(1, 3):
             print(f"page no : {page}")

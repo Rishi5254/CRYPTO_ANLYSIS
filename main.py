@@ -40,6 +40,9 @@ db.create_all()
 
 def add_to_db(title, description, content, date, url, img_url, article_source, topic_related,
               main_source, title_sentiment, description_sentiment, content_sentiment, overall_sentiment):
+    content = content.replace("\n", "")
+    content = content.replace("  ", "")
+    content = content.replace("\t", "")
     try:
         new_article = Articles(title=title, description=description, content=content, date=date, url=url, img_url=img_url,
                                article_source=article_source, topic_related=topic_related, main_source=main_source,
@@ -76,8 +79,10 @@ def data_extract(date, query):
         title = data.get("title")
         description = data.get("description")
         content = content_extract.content_extractor(data.get("url"))
+        if len(content) < 25:
+            content = data.get('content')
         date = data.get("publishedAt").split("T")[0]
-        url= data.get("url")
+        url = data.get("url")
         img_url = data.get("urlToImage")
         article_source = data.get("source").get("name")
         topic_related = query
@@ -111,7 +116,6 @@ def data_extract(date, query):
                   title_sentiment, description_sentient, content_sentiment, overall_sentiment)
 
 
-data_extract("18-1-2022", queries[0])
 
 #
 # if __name__ == "__main__":d

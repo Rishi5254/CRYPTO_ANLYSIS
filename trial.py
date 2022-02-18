@@ -1,4 +1,8 @@
+con = "hi mama\n at\ttula     v     rra \n\n\n\n varii"
 
-n = 0.39166666666666666
-
-print(round(n, 2))
+print(con)
+print("strip")
+con = con.replace("\n", "")
+con = con.replace("  ", "")
+con = con.replace("\t", "")
+print(con)
