@@ -45,4 +45,3 @@ def extract_data(day, month, year, query):
     return all_data
 
 
-extract_data(15, 2, 2022, "ethereum")

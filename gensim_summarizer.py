@@ -4,6 +4,9 @@ from pysummarization.abstractabledoc.top_n_rank_abstractor import TopNRankAbstra
 import urllib.request
 import requests
 from bs4 import BeautifulSoup
+from gensim.summarization.summarizer import summarize
+from gensim.summarization import keywords
+
 
 url = "https://www.fool.com/investing/2022/02/15/top-cryptos-by-market-cap-which-should-you-buy/"
 
