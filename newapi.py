@@ -10,37 +10,54 @@ api_keys = ["6dbd4a994f78422aa92361f3f9414ef3", "9c4756ec043f430b92ab1b859e0992a
 
 
 def find_api():
-    api_key = None
+    api_key_index = None
     is_found = True
     while is_found:
-        for i in api_keys:
+        for index, i in enumerate(api_keys):
             api = i
             parameters = {
                 "apiKey": api,
-                "q": "bitcoin"
+                "q": "bitcoin",
             }
-            response = requests.get(url=f"https://newsapi.org/v2/everything", params=parameters).json()["status"]
-            if response == "error":
-                continue
-            elif response == "ok":
-                api_key = api
+            response = requests.get(url=f"https://newsapi.org/v2/everything", params=parameters).json()
+            response = response["status"]
+            if response == "ok":
+                api_key_index = index
                 is_found = False
                 break
-    print(api_key)
-    return api_key
+    print(f"NEW API : {api_key_index}")
+    return api_key_index
 
 
-def end_page(day, month, year, query):
-    api_key = find_api()
-    url = "https://newsapi.org/v2/everything?"
+def parameters(query, api_index, day, month, year, sort, page):
     parameters = {
         "q": f"{query}",
-        "apiKey": f"{api_key}",
+        "apiKey": f"{api_keys[api_index]}",
         "from": f"{year}-{month}-{day}",
         "to": f"{year}-{month}-{day}",
         "language": "en",
+        "sortBy": sort,
+        "page": f"{page}"
     }
-    response = requests.get(url=url, params=parameters).json()['totalResults']
+    return parameters
+
+
+def end_page(day, month, year, query, api):
+    url = "https://newsapi.org/v2/everything?"
+    api_index = api
+    response = 0
+    print("tried")
+    is_found = True
+    while is_found:
+        api_response = requests.get(url=url, params=parameters(query, api_index, day, month, year, "relevancy", 1)).json()
+        print(api_response)
+        if api_response['status'] == "ok":
+            response = api_response['totalResults']
+            break
+        else:
+            api_index += 1
+
+    print(f"END PAGE RESPONSE : {response}")
     if response > 80:
         return 6
     elif response > 60:
@@ -56,36 +73,39 @@ def end_page(day, month, year, query):
 
 
 def extract_data(day, month, year, query, query_type):
+    api_key_index = find_api()
     last_page = 6
     all_data = []
-    api_key = find_api()
-    print(api_key)
     if query_type:
-        last_page = end_page(day, month, year, query)
+        last_page = end_page(day, month, year, query, api_key_index)
+        print(f"last page : {last_page}")
     for page in range(1, last_page):
         for i in range(1, 3):
+            print(f"Page nO : {page} -- Inside : {i}")
+            print(f"API INDEX: {api_key_index}")
             if i == 1:
                 sort = "relevancy"
             else:
                 sort = "popularity"
             url = "https://newsapi.org/v2/everything?"
-            parameters = {
-                "q": f"{query}",
-                "apiKey": f"{api_key}",
-                "from": f"{year}-{month}-{day}",
-                "to": f"{year}-{month}-{day}",
-                "language": "en",
-                "sortBy": sort,
-                "page": f"{page}"
-            }
-            try:
-                response = requests.get(url=url, params=parameters).json()['articles']
-            except KeyError:
-                new_api = find_api()
-                api_key = new_api
-                response = requests.get(url=url, params=parameters).json()['articles']
-            all_data += response
+
+            is_found = True
+            while is_found:
+                response = requests.get(url=url, params=parameters(query, api_key_index, day, month, year, sort, page)).json()
+                print(response)
+                print("\n")
+                if response['status'] == "ok":
+                    response = response['articles']
+                    all_data += response
+                    break
+                else:
+                    api_key_index += 1
+
     return all_data
 
 
-print(extract_data(19, 1, 2022, "nft", True))
+for n in range(24, 30):
+    print(f"Date : {n}-1-2022")
+    extract_data(n, 1, 2022, "celebrity", True)
+
+

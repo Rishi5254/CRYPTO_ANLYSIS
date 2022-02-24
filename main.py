@@ -69,45 +69,29 @@ def data_extract(date, query):
     day = date[0]
     month = date[1]
     year = date[2]
-
+    print(day, month, year)
     newapi_data = newapi.extract_data(day, month, year, query, False)
 
     for data in newapi_data:
+
+        title = data.get("title")
+        description = data.get("description")
+        content = content_extract.content_extractor(data.get("url"))
+        if len(content) < 50:
+            content = data.get('content')
+        date = data.get("publishedAt").split("T")[0]
         url = data.get("url")
-        url_present = False
-        try:
-            article = db.session.query(Articles).filter_by(url=url).first()
-            if article.url == url:
-                url_present = True
-                topic = article.topic_related
-                topics = topic.split(",")
-                if query not in topics:
-                    article.topic_related = f"{topic},{query}"
-                    db.session.commit()
-                    print("comma added")
-        except AttributeError:
-            url_present = False
+        img_url = data.get("urlToImage")
+        article_source = data.get("source").get("name")
+        topic_related = query
+        main_source = "newapi.org"
+        title_sentiment = sentiment.sentiment(title)
+        description_sentient = sentiment.sentiment(description)
+        content_sentiment = sentiment.sentiment(content)
+        overall_sentiment = round(title_sentiment + description_sentient + content_sentiment, 2)
 
-        if not url_present:
-
-            title = data.get("title")
-            description = data.get("description")
-            content = content_extract.content_extractor(data.get("url"))
-            if len(content) < 25:
-                content = data.get('content')
-            date = data.get("publishedAt").split("T")[0]
-            url = data.get("url")
-            img_url = data.get("urlToImage")
-            article_source = data.get("source").get("name")
-            topic_related = query
-            main_source = "newapi.org"
-            title_sentiment = sentiment.sentiment(title)
-            description_sentient = sentiment.sentiment(description)
-            content_sentiment = sentiment.sentiment(content)
-            overall_sentiment = round(title_sentiment + description_sentient + content_sentiment, 2)
-
-            add_to_db(title, description, content, date, url, img_url, article_source, topic_related, main_source,
-                      title_sentiment, description_sentient, content_sentiment, overall_sentiment )
+        add_to_db(title, description, content, date, url, img_url, article_source, topic_related, main_source,
+                  title_sentiment, description_sentient, content_sentiment, overall_sentiment )
 
     gnews_data = gnews.extract_data(day, month, year, query)
 
@@ -130,12 +114,10 @@ def data_extract(date, query):
                   title_sentiment, description_sentient, content_sentiment, overall_sentiment)
 
 
-queries = ["bitcoin", "ethereum", "dogecoin", "litecoin", "ripple", "tether coin", "Binance coin", "ntf"]
+queries = ["bitcoin", "ethereum", "dogecoin", "litecoin", "ripple", "tether coin", "Binance coin", "nft"]
 
-for i in range(7, 8):
-    print(i)
-    print(queries[i])
-    data_extract("19-1-2022", queries[i])
+for i in range(0, 8):
+    data_extract("18-1-2022", queries[i])
 
 
 # if __name__ == "__main__":d

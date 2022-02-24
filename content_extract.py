@@ -16,10 +16,10 @@ def extracter(url):
     for para in soup.find_all("h2"):
         data += para.get_text()
         data += "\n"
-    for para in soup.find_all("h2"):
+    for para in soup.find_all("h3"):
         data += para.get_text()
         data += "\n"
-    for para in soup.find_all("h2"):
+    for para in soup.find_all("h4"):
         data += para.get_text()
         data += "\n"
     return data
@@ -50,3 +50,6 @@ def content_extractor(url):
             return content
         except:
             return "Invalid url"
+
+
+print(content_extractor("https://bitcoinist.com/intels-bitcoin-mining-chip-bonanza-bags-mining-startup/"))
