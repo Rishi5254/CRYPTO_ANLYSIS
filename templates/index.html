@@ -1,0 +1,405 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+{% include "header.html" %}
+<section class="home">
+    <h1 class="text ">Dashboard</h1>
+
+{% if data['bitcoin'] != [] %}
+
+<!--BITCOIN-->
+
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Load Charts and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      google.charts.setOnLoadCallback(drawSarahChart);
+
+      google.charts.setOnLoadCallback(drawAnthonyChart);
+
+      function drawSarahChart() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Mushrooms', 1],
+          ['Onions', 1],
+          ['Olives', 2],
+          ['Zucchini', 2],
+          ['Pepperoni', 1]
+        ]);
+
+        var options = {title:'How Much Pizza Sarah Ate Last Night',
+                       width:600,
+                       height:450,
+                       'backgroundColor': 'transparent',
+                       'is3D':true};
+
+        // Instantiate and draw the chart for Sarah's pizza.
+        var chart = new google.visualization.PieChart(document.getElementById('bitcoin_chart'));
+        chart.draw(data, options);
+      }
+
+    </script>
+  </head>
+  <body>
+    <!--Table and divs that hold the pie charts-->
+    <table class="columns">
+      <tr>
+        <td><div id="bitcoin_chart" ></div></td>
+      </tr>
+    </table>
+  </body>
+
+<!--ETHEREUM-->
+
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Load Charts and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      google.charts.setOnLoadCallback(drawSarahChart);
+
+      google.charts.setOnLoadCallback(drawAnthonyChart);
+
+      function drawSarahChart() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Mushrooms', 1],
+          ['Onions', 1],
+          ['Olives', 2],
+          ['Zucchini', 2],
+          ['Pepperoni', 1]
+        ]);
+
+        var options = {title:'How Much Pizza Sarah Ate Last Night',
+                       width:600,
+                       height:450,
+                       'backgroundColor': 'transparent',
+                       'is3D':true};
+
+        // Instantiate and draw the chart for Sarah's pizza.
+        var chart = new google.visualization.PieChart(document.getElementById('ETH_chart'));
+        chart.draw(data, options);
+      }
+
+    </script>
+  </head>
+  <body>
+    <!--Table and divs that hold the pie charts-->
+    <table class="columns">
+      <tr>
+        <td><div id="ETH_chart" ></div></td>
+      </tr>
+    </table>
+  </body>
+
+<!--DoGECOIN-->
+
+    <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Load Charts and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      google.charts.setOnLoadCallback(drawSarahChart);
+
+      google.charts.setOnLoadCallback(drawAnthonyChart);
+
+      function drawSarahChart() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Mushrooms', 1],
+          ['Onions', 1],
+          ['Olives', 2],
+          ['Zucchini', 2],
+          ['Pepperoni', 1]
+        ]);
+
+        var options = {title:'How Much Pizza Sarah Ate Last Night',
+                       width:600,
+                       height:450,
+                       'backgroundColor': 'transparent',
+                       'is3D':true};
+
+        // Instantiate and draw the chart for Sarah's pizza.
+        var chart = new google.visualization.PieChart(document.getElementById('doge_chart'));
+        chart.draw(data, options);
+      }
+
+    </script>
+  </head>
+  <body>
+    <!--Table and divs that hold the pie charts-->
+    <table class="columns">
+      <tr>
+        <td><div id="doge_chart" ></div></td>
+      </tr>
+    </table>
+  </body>
+
+<!--litecoin-->
+
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Load Charts and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      google.charts.setOnLoadCallback(drawSarahChart);
+
+      google.charts.setOnLoadCallback(drawAnthonyChart);
+
+      function drawSarahChart() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Mushrooms', 1],
+          ['Onions', 1],
+          ['Olives', 2],
+          ['Zucchini', 2],
+          ['Pepperoni', 1]
+        ]);
+
+        var options = {title:'How Much Pizza Sarah Ate Last Night',
+                       width:600,
+                       height:450,
+                       'backgroundColor': 'transparent',
+                       'is3D':true};
+
+        // Instantiate and draw the chart for Sarah's pizza.
+        var chart = new google.visualization.PieChart(document.getElementById('lite_chart'));
+        chart.draw(data, options);
+      }
+
+    </script>
+  </head>
+  <body>
+    <!--Table and divs that hold the pie charts-->
+    <table class="columns">
+      <tr>
+        <td><div id="lite_chart" ></div></td>
+      </tr>
+    </table>
+  </body>
+
+<!--RIPPLE-->
+
+    <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Load Charts and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      google.charts.setOnLoadCallback(drawSarahChart);
+
+      google.charts.setOnLoadCallback(drawAnthonyChart);
+
+      function drawSarahChart() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Mushrooms', 1],
+          ['Onions', 1],
+          ['Olives', 2],
+          ['Zucchini', 2],
+          ['Pepperoni', 1]
+        ]);
+
+        var options = {title:'How Much Pizza Sarah Ate Last Night',
+                       width:600,
+                       height:450,
+                       'backgroundColor': 'transparent',
+                       'is3D':true};
+
+        // Instantiate and draw the chart for Sarah's pizza.
+        var chart = new google.visualization.PieChart(document.getElementById('ripple_chart'));
+        chart.draw(data, options);
+      }
+
+    </script>
+  </head>
+  <body>
+    <!--Table and divs that hold the pie charts-->
+    <table class="columns">
+      <tr>
+        <td><div id="ripple_chart" ></div></td>
+      </tr>
+    </table>
+  </body>
+
+<!--TETHER COIN-->
+
+
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Load Charts and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      google.charts.setOnLoadCallback(drawSarahChart);
+
+      google.charts.setOnLoadCallback(drawAnthonyChart);
+
+      function drawSarahChart() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Mushrooms', 1],
+          ['Onions', 1],
+          ['Olives', 2],
+          ['Zucchini', 2],
+          ['Pepperoni', 1]
+        ]);
+
+        var options = {title:'How Much Pizza Sarah Ate Last Night',
+                       width:600,
+                       height:450,
+                       'backgroundColor': 'transparent',
+                       'is3D':true};
+
+        // Instantiate and draw the chart for Sarah's pizza.
+        var chart = new google.visualization.PieChart(document.getElementById('tether_chart'));
+        chart.draw(data, options);
+      }
+
+    </script>
+  </head>
+  <body>
+    <!--Table and divs that hold the pie charts-->
+    <table class="columns">
+      <tr>
+        <td><div id="tether_chart" ></div></td>
+      </tr>
+    </table>
+  </body>
+
+
+<!--BINANCE-->
+
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Load Charts and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      google.charts.setOnLoadCallback(drawSarahChart);
+
+      google.charts.setOnLoadCallback(drawAnthonyChart);
+
+      function drawSarahChart() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Mushrooms', 1],
+          ['Onions', 1],
+          ['Olives', 2],
+          ['Zucchini', 2],
+          ['Pepperoni', 1]
+        ]);
+
+        var options = {title:'How Much Pizza Sarah Ate Last Night',
+                       width:600,
+                       height:450,
+                       'backgroundColor': 'transparent',
+                       'is3D':true};
+
+        // Instantiate and draw the chart for Sarah's pizza.
+        var chart = new google.visualization.PieChart(document.getElementById('binance_chart'));
+        chart.draw(data, options);
+      }
+
+    </script>
+  </head>
+  <body>
+    <!--Table and divs that hold the pie charts-->
+    <table class="columns">
+      <tr>
+        <td><div id="binance_chart" ></div></td>
+      </tr>
+    </table>
+  </body>
+
+<!--NFT-->
+
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Load Charts and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      google.charts.setOnLoadCallback(drawSarahChart);
+
+      google.charts.setOnLoadCallback(drawAnthonyChart);
+
+      function drawSarahChart() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Mushrooms', 1],
+          ['Onions', 1],
+          ['Olives', 2],
+          ['Zucchini', 2],
+          ['Pepperoni', 1]
+        ]);
+
+        var options = {title:'How Much Pizza Sarah Ate Last Night',
+                       width:600,
+                       height:450,
+                       'backgroundColor': 'transparent',
+                       'is3D':true};
+
+        // Instantiate and draw the chart for Sarah's pizza.
+        var chart = new google.visualization.PieChart(document.getElementById('nft_chart'));
+        chart.draw(data, options);
+      }
+
+    </script>
+  </head>
+  <body>
+    <!--Table and divs that hold the pie charts-->
+    <table class="columns">
+      <tr>
+        <td><div id="nft_chart" ></div></td>
+      </tr>
+    </table>
+  </body>
+
+
+{% endif %}
+
+</section>
+
+{% include "footer.html" %}
+{% endblock %}
+
+

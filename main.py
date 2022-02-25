@@ -1,13 +1,17 @@
-from flask import Flask
+from flask import Flask, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import exc
+from flask_bootstrap import Bootstrap
 import newapi
 import gnews
 import content_extract
 import sentiment
+import forms
+import datetime
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+Bootstrap(app)
 
 # CONNECT TO DB
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///articles.db'
@@ -115,10 +119,58 @@ def data_extract(date, query):
 
 
 queries = ["bitcoin", "ethereum", "dogecoin", "litecoin", "ripple", "tether coin", "Binance coin", "nft"]
+#
+# for i in range(7, 8):
+#     data_extract("25-1-2022", queries[i])
 
-for i in range(0, 8):
-    data_extract("18-1-2022", queries[i])
+
+@app.route('/', methods=['GET', 'POST'])
+def homepage():
+    dict = {}
+    final_dict = {'normal': [],
+                  'positive': [],
+                  'negative': []
+                  }
+    date = datetime.datetime.now().date()
+    date = "2022-01-19"
+    for coin in queries:
+        data = Articles.query.filter(Articles.topic_related.contains(coin), Articles.date == date).all()
+        for index, article in enumerate(data):
+            if index == 0:
+                dict[coin] = []
+                dict[coin].append(article.title_sentiment)
+            else:
+                dict[coin].append(article.title_sentiment)
+    for query in dict:
+        values = dict[query]
+        for value in values:
+            if value == 0:
+                final_dict['normal'].append(value)
+            elif value > 0:
+                final_dict['positive'].append(value)
+            else:
+                final_dict['negative'].append(value)
+        dict[query] = final_dict
+        final_dict = {'normal': [],
+                      'positive': [],
+                      'negative': []
+                      }
+
+    print(dict)
 
 
-# if __name__ == "__main__":d
-#     app.run(debug=True)
+    return render_template('index.html', data=dict)
+
+
+@app.route('/table')
+def table():
+    form = forms.DataPicker()
+    if form.validate_on_submit():
+        date = form.date.data
+        data = Articles.query.filter(Articles.topic_related.contains(query), Articles.date == date).all()
+        return render_template('index.html', data=data, form=form)
+    return render_template('table.html', form)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)

@@ -104,8 +104,5 @@ def extract_data(day, month, year, query, query_type):
     return all_data
 
 
-for n in range(24, 30):
-    print(f"Date : {n}-1-2022")
-    extract_data(n, 1, 2022, "celebrity", True)
 
 

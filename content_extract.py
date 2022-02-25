@@ -10,7 +10,7 @@ def extracter(url):
     webpage = webpage.decode('utf-8')
     soup = BeautifulSoup(webpage, "lxml")
     data = ""
-    for para in soup.find_all("p"):
+    for para in soup.find_all("td"):
         data += para.get_text()
         data += "\n"
     for para in soup.find_all("h2"):
@@ -51,5 +51,5 @@ def content_extractor(url):
         except:
             return "Invalid url"
 
+# print(content_extractor("https://sg.finance.yahoo.com/quote/DOGE-USD/history?period1=1640995200&period2=1645747200&interval=1d&filter=history&frequency=1d&includeAdjustedClose=true"))
 
-print(content_extractor("https://bitcoinist.com/intels-bitcoin-mining-chip-bonanza-bags-mining-startup/"))
