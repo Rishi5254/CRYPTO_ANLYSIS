@@ -1,0 +1,17 @@
+{% include "header.html" %}
+
+<section class="home">
+    <p>
+       <h1 class="text" style="font-size:40px;"> {{ article.title }}-</h1>
+    </p>
+
+    <p class="text nav-text" style="font-size:30px;">{{ article.description }}</p>
+
+    <p class="text" style="font-size:25px;">
+        {{ article.content }}
+    </p>
+
+</section>
+
+
+{% include "footer.html" %}

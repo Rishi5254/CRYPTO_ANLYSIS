@@ -4,12 +4,14 @@
 {% block content %}
 {% include "header.html" %}
 <section class="home">
-    <h1 class="text ">Dashboard</h1>
+    <h1 class="text ">Today sentiment</h1>
+
 
 {% if data['bitcoin'] != [] %}
 
 <!--BITCOIN-->
 
+  {% if data['bitcoin'] %}
 <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -27,14 +29,15 @@
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
         data.addRows([
-          ['Mushrooms', 1],
-          ['Onions', 1],
-          ['Olives', 2],
-          ['Zucchini', 2],
-          ['Pepperoni', 1]
+
+          ['normal', {{ data['bitcoin']['normal'] }}],
+          ['positive',{{ data['bitcoin']['positive'] }}],
+          ['negative', {{ data['bitcoin']['negative'] }}],
+
+
         ]);
 
-        var options = {title:'How Much Pizza Sarah Ate Last Night',
+        var options = {title:'BitCoin - ({{ data['bitcoin']['normal'] +  data['bitcoin']['positive'] + data['bitcoin']['negative'] }}) Articles',
                        width:600,
                        height:450,
                        'backgroundColor': 'transparent',
@@ -56,7 +59,9 @@
     </table>
   </body>
 
+  {% endif %}
 <!--ETHEREUM-->
+{% if data['ethereum'] %}
 
 <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -75,14 +80,13 @@
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
         data.addRows([
-          ['Mushrooms', 1],
-          ['Onions', 1],
-          ['Olives', 2],
-          ['Zucchini', 2],
-          ['Pepperoni', 1]
+
+          ['normal', {{data['ethereum']['normal']}}],
+          ['positive', {{data['ethereum']['positive']}}],
+          ['negative', {{data['ethereum']['negative']}}],
         ]);
 
-        var options = {title:'How Much Pizza Sarah Ate Last Night',
+        var options = {title:'Ethereum- ({{ data['ethereum']['normal'] +  data['ethereum']['positive'] + data['ethereum']['negative'] }}) Articles',
                        width:600,
                        height:450,
                        'backgroundColor': 'transparent',
@@ -104,8 +108,10 @@
     </table>
   </body>
 
+  {% endif %}
 <!--DoGECOIN-->
 
+  {% if data['dogecoin'] %}
     <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -123,14 +129,13 @@
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
         data.addRows([
-          ['Mushrooms', 1],
-          ['Onions', 1],
-          ['Olives', 2],
-          ['Zucchini', 2],
-          ['Pepperoni', 1]
+
+          ['normal', {{data['dogecoin']['normal']}}],
+          ['positive', {{data['dogecoin']['positive']}}],
+          ['negative', {{data['dogecoin']['negative']}}],
         ]);
 
-        var options = {title:'How Much Pizza Sarah Ate Last Night',
+        var options = {title:'Dogecoin- ({{ data['dogecoin']['normal'] +  data['dogecoin']['positive'] + data['dogecoin']['negative'] }}) Articles',
                        width:600,
                        height:450,
                        'backgroundColor': 'transparent',
@@ -152,7 +157,9 @@
     </table>
   </body>
 
+  {% endif %}
 <!--litecoin-->
+{% if data['litecoin'] %}
 
 <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -171,14 +178,13 @@
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
         data.addRows([
-          ['Mushrooms', 1],
-          ['Onions', 1],
-          ['Olives', 2],
-          ['Zucchini', 2],
-          ['Pepperoni', 1]
+
+          ['normal', {{data['litecoin']['normal']}}],
+          ['positive', {{data['litecoin']['positive']}}],
+          ['negative', {{data['litecoin']['negative']}}],
         ]);
 
-        var options = {title:'How Much Pizza Sarah Ate Last Night',
+        var options = {title:'  Litecoin- ({{ data['litecoin']['normal'] +  data['litecoin']['positive'] + data['litecoin']['negative'] }}) Articles',
                        width:600,
                        height:450,
                        'backgroundColor': 'transparent',
@@ -200,8 +206,10 @@
     </table>
   </body>
 
-<!--RIPPLE-->
+{% endif %}
 
+<!--RIPPLE-->
+{% if data['ripple'] %}
     <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -219,14 +227,13 @@
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
         data.addRows([
-          ['Mushrooms', 1],
-          ['Onions', 1],
-          ['Olives', 2],
-          ['Zucchini', 2],
-          ['Pepperoni', 1]
+
+          ['normal', {{data['ripple']['normal']}}],
+          ['positive', {{data['ripple']['positive']}}],
+          ['negative',{{ data['ripple']['negative']}}],
         ]);
 
-        var options = {title:'How Much Pizza Sarah Ate Last Night',
+        var options = {title:'Ripple- ({{ data['ripple']['normal'] +  data['ripple']['positive'] + data['ripple']['negative'] }}) Articles',
                        width:600,
                        height:450,
                        'backgroundColor': 'transparent',
@@ -248,7 +255,10 @@
     </table>
   </body>
 
+{% endif %}
+
 <!--TETHER COIN-->
+{% if data['tether coin'] %}
 
 
 <head>
@@ -268,14 +278,13 @@
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
         data.addRows([
-          ['Mushrooms', 1],
-          ['Onions', 1],
-          ['Olives', 2],
-          ['Zucchini', 2],
-          ['Pepperoni', 1]
+
+          ['normal', {{data['tether coin']['normal']}}],
+          ['positive', {{data['tether coin']['positive']}}],
+          ['negative', {{data['tether coin']['negative']}}],
         ]);
 
-        var options = {title:'How Much Pizza Sarah Ate Last Night',
+        var options = {title:'Tether Coin- ({{ data['tether coin']['normal'] +  data['tether coin']['positive'] + data['tether coin']['negative'] }}) Articles',
                        width:600,
                        height:450,
                        'backgroundColor': 'transparent',
@@ -297,9 +306,11 @@
     </table>
   </body>
 
+{% endif %}
 
 <!--BINANCE-->
 
+  {% if data['Binance coin'] %}
 <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -317,14 +328,13 @@
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
         data.addRows([
-          ['Mushrooms', 1],
-          ['Onions', 1],
-          ['Olives', 2],
-          ['Zucchini', 2],
-          ['Pepperoni', 1]
+
+          ['normal', {{data['Binance coin']['normal']}}],
+          ['positive', {{data['Binance coin']['positive']}}],
+          ['negative', {{data['Binance coin']['negative']}}],
         ]);
 
-        var options = {title:'How Much Pizza Sarah Ate Last Night',
+        var options = {title:'Binance coin- ({{ data['Binance coin']['normal'] +  data['Binance coin']['positive'] + data['Binance coin']['negative'] }}) Articles',
                        width:600,
                        height:450,
                        'backgroundColor': 'transparent',
@@ -346,8 +356,10 @@
     </table>
   </body>
 
+  {% endif %}
 <!--NFT-->
 
+  {% if data['ntf'] %}
 <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -365,14 +377,13 @@
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
         data.addRows([
-          ['Mushrooms', 1],
-          ['Onions', 1],
-          ['Olives', 2],
-          ['Zucchini', 2],
-          ['Pepperoni', 1]
+
+          ['normal', {{data['nft']['normal']}}],
+          ['positive', {{data['nft']['positive']}}],
+          ['negative', {{data['nft']['negative']}}],
         ]);
 
-        var options = {title:'How Much Pizza Sarah Ate Last Night',
+        var options = {title:'NFT- ({{ data['nft']['normal'] +  data['nft']['positive'] + data['nft']['negative'] }}) Articles',
                        width:600,
                        height:450,
                        'backgroundColor': 'transparent',
@@ -394,7 +405,7 @@
     </table>
   </body>
 
-
+{% endif %}
 {% endif %}
 
 </section>

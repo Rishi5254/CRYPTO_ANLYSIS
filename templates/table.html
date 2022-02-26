@@ -1,14 +1,18 @@
-{% extends "header.html" %}
-
-{% block head %}
-    <link rel="stylesheet" href="static/tables.css" />
-    <script src="https://kit.fontawesome.com/f4d4be4925.js" crossorigin="anonymous"></script>
-{% endblock %}
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block content %}
+{% include "header.html" %}
+
+    <link rel="stylesheet" href="static/tables.css" />
+    <script src="https://kit.fontawesome.com/f4d4be4925.js" crossorigin="anonymous"></script>
 
 
-    <div class="form-in-dashboard text" style="font-size: 15px;">
+
+<section class="home">
+        <h1 class="text ">View Articles</h1>
+
+        <div class="form-in-dashboard text" style="font-size: 15px;">
             {% with messages = get_flashed_messages() %}
               {% if messages %}
                 {% for message in messages %}
@@ -17,9 +21,9 @@
               {% endif %}
             {% endwith %}
             {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
-    </div>
+        </div>
 
-<section class="home">
+{% if articles %}
   <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -30,13 +34,13 @@
 
         var data = google.visualization.arrayToDataTable([
           ['Task', 'Hours per Day'],
-          ['Work',     11],
-          ['Eat',      2],
-          ['Watch TV', 2],
+          ['Normal',     {{ senti['normal'] }}],
+          ['Positive',      {{ senti['positive'] }}],
+          ['Negative', {{ senti['negative'] }}],
 
         ]);
 
-        var options = {'title':'Chart Title',
+        var options = {'title':'{{ query }}- ({{ senti['normal'] + senti['positive'] + senti['negative'] }} Articles)',
         'width':700,
         'height':400,
         'backgroundColor': 'transparent',
@@ -50,7 +54,7 @@
     </script>
   </head>
   <body>
-    <div id="piechart" style="width: 400px; height: 450px;"></div>
+    <div id="piechart" style="width: 650px; height: 450px; margin:auto;"></div>
   </body>
 
 
@@ -81,73 +85,27 @@
                         <thead>
                             <tr>
                                 <th>Action</th>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Age</th>
+                                <th>URL</th>
+                                <th>Title</th>
+                                <th></th>
                                 <th>View</th>
                             </tr>
                         </thead>
                         <tbody>
+                        {% for article in articles %}
                             <tr>
                                 <td>
                                     <ul class="action-list">
-                                        <li><a href="#" class="btn btn-primary"><i class="fa fa-pencil-alt"></i></a></li>
                                         <li><a href="#" class="btn btn-danger"><i class="fa fa-times"></i></a></li>
                                     </ul>
                                 </td>
-                                <td>1</td>
-                                <td>Vincent Williamson</td>
-                                <td>31</td>
-                                <td><a href="#" class="btn btn-sm btn-success"><i class="fa fa-search"></i></a></td>
+                                <td><a href="{{ article.url }}" class="btn"><i class="fas fa-link fa-lg"></i></i></a></td>
+                                <td>{{ article.title }}</td>
+                                <td></td>
+                                <td><a href="{{ url_for('article_details', id=article.id) }}" class="btn btn-sm btn-success"><i class="fa fa-search"></i></a></td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <ul class="action-list">
-                                        <li><a href="#" class="btn btn-primary"><i class="fa fa-pencil-alt"></i></a></li>
-                                        <li><a href="#" class="btn btn-danger"><i class="fa fa-times"></i></a></li>
-                                    </ul>
-                                </td>
-                                <td>2</td>
-                                <td>Taylor Reyes</td>
-                                <td>22</td>
-                                <td><a href="#" class="btn btn-sm btn-success"><i class="fa fa-search"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <ul class="action-list">
-                                        <li><a href="#" class="btn btn-primary"><i class="fa fa-pencil-alt"></i></a></li>
-                                        <li><a href="#" class="btn btn-danger"><i class="fa fa-times"></i></a></li>
-                                    </ul>
-                                </td>
-                                <td>3</td>
-                                <td>Justin Block</td>
-                                <td>26</td>
-                                <td><a href="#" class="btn btn-sm btn-success"><i class="fa fa-search"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <ul class="action-list">
-                                        <li><a href="#" class="btn btn-primary"><i class="fa fa-pencil-alt"></i></a></li>
-                                        <li><a href="#" class="btn btn-danger"><i class="fa fa-times"></i></a></li>
-                                    </ul>
-                                </td>
-                                <td>4</td>
-                                <td>Sean Guzman</td>
-                                <td>26</td>
-                                <td><a href="#" class="btn btn-sm btn-success"><i class="fa fa-search"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <ul class="action-list">
-                                        <li><a href="#" class="btn btn-primary"><i class="fa fa-pencil-alt"></i></a></li>
-                                        <li><a href="#" class="btn btn-danger"><i class="fa fa-times"></i></a></li>
-                                    </ul>
-                                </td>
-                                <td>5</td>
-                                <td>Keith Carter</td>
-                                <td>24</td>
-                                <td><a href="#" class="btn btn-sm btn-success"><i class="fa fa-search"></i></a></td>
-                            </tr>
+                        {% endfor %}
+
                         </tbody>
                     </table>
                 </div>
@@ -175,6 +133,8 @@
         </div>
     </div>
 </div>
+
+{% endif %}
 </section>
 
 {% include "footer.html" %}

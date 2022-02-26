@@ -57,15 +57,20 @@ def add_to_db(title, description, content, date, url, img_url, article_source, t
         db.session.commit()
         print(date, title, topic_related )
     except exc.IntegrityError:
-        db.session.rollback()
-        print("rolled back...... ")
-        article = db.session.query(Articles).filter_by(url=url).first()
-        topic = article.topic_related
-        topics = topic.split(",")
-        if topic_related not in topics:
-            article.topic_related = f"{topic},{topic_related}"
-            db.session.commit()
-            print("comma added.......")
+        try:
+            db.session.rollback()
+            print("rolled back...... ")
+            article = db.session.query(Articles).filter_by(url=url).first()
+            topic = article.topic_related
+            topics = topic.split(",")
+            if topic_related not in topics:
+                article.topic_related = f"{topic},{topic_related}"
+                db.session.commit()
+                print("comma added.......")
+        except:
+            db.session.rollback()
+            print("ROLLED BACK FOR GOOD")
+
 
 
 def data_extract(date, query):
@@ -77,12 +82,20 @@ def data_extract(date, query):
     newapi_data = newapi.extract_data(day, month, year, query, False)
 
     for data in newapi_data:
+        present = False
+        content = ""
+        url = data.get("url")
+        article = db.session.query(Articles).filter_by(url=url).first()
+        if article:
+            present = True
+            content = article.content
 
         title = data.get("title")
         description = data.get("description")
-        content = content_extract.content_extractor(data.get("url"))
-        if len(content) < 50:
-            content = data.get('content')
+        if not present:
+            content = content_extract.content_extractor(data.get("url"))
+            if len(content) < 50:
+                content = data.get('content')
         date = data.get("publishedAt").split("T")[0]
         url = data.get("url")
         img_url = data.get("urlToImage")
@@ -119,9 +132,9 @@ def data_extract(date, query):
 
 
 queries = ["bitcoin", "ethereum", "dogecoin", "litecoin", "ripple", "tether coin", "Binance coin", "nft"]
-#
-# for i in range(7, 8):
-#     data_extract("25-1-2022", queries[i])
+
+# for i in queries:
+#     data_extract("26-2-2022n", i)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -132,7 +145,6 @@ def homepage():
                   'negative': []
                   }
     date = datetime.datetime.now().date()
-    date = "2022-01-19"
     for coin in queries:
         data = Articles.query.filter(Articles.topic_related.contains(coin), Articles.date == date).all()
         for index, article in enumerate(data):
@@ -153,23 +165,44 @@ def homepage():
         dict[query] = final_dict
         final_dict = {'normal': [],
                       'positive': [],
-                      'negative': []
+                      'negative': [],
                       }
-
+    for query in dict:
+        values = dict[query]
+        for value in values:
+            dict[query][value] = len(values[value])
     print(dict)
-
-
     return render_template('index.html', data=dict)
 
 
-@app.route('/table')
+@app.route('/table', methods=['GET', 'POST'])
 def table():
     form = forms.DataPicker()
     if form.validate_on_submit():
+        final_dict = {'normal': [],
+                      'positive': [],
+                      'negative': []
+                      }
+        query = form.query.data
         date = form.date.data
         data = Articles.query.filter(Articles.topic_related.contains(query), Articles.date == date).all()
-        return render_template('index.html', data=data, form=form)
-    return render_template('table.html', form)
+        for article in data:
+            if article.title_sentiment == 0:
+                final_dict['normal'].append(article.title_sentiment)
+            elif article.title_sentiment > 0:
+                final_dict['positive'].append(article.title_sentiment)
+            else:
+                final_dict['negative'].append(article.title_sentiment)
+        for sentiment in final_dict:
+            final_dict[sentiment] = len(final_dict[sentiment])
+        return render_template('table.html', articles=data, form=form, senti=final_dict, query=query)
+    return render_template('table.html', form=form)
+
+
+@app.route('/article/<int:id>', methods=['GET', 'POST'])
+def article_details(id):
+    article = Articles.query.get(id)
+    return render_template('article.html', article=article)
 
 
 if __name__ == "__main__":
