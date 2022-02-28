@@ -72,14 +72,13 @@ def add_to_db(title, description, content, date, url, img_url, article_source, t
             print("ROLLED BACK FOR GOOD")
 
 
-
 def data_extract(date, query):
     date = date.split("-")
     day = date[0]
     month = date[1]
     year = date[2]
     print(day, month, year)
-    newapi_data = newapi.extract_data(day, month, year, query, False)
+    newapi_data = newapi.extract_data(day, month, year, query, True)
 
     for data in newapi_data:
         present = False
@@ -131,10 +130,12 @@ def data_extract(date, query):
                   title_sentiment, description_sentient, content_sentiment, overall_sentiment)
 
 
-queries = ["bitcoin", "ethereum", "dogecoin", "litecoin", "ripple", "tether coin", "Binance coin", "nft"]
+queries = ["bitcoin", "ethereum", "dogecoin", "litecoin", "tether coin", "Binance coin", "nft"]
 
-# for i in queries:
-#     data_extract("26-2-2022n", i)
+
+for n in range(1,2):
+    for i in queries:
+        data_extract(f"{n}-3-2022", i)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -205,5 +206,5 @@ def article_details(id):
     return render_template('article.html', article=article)
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+# if __name__ == "__main__":
+#     app.run(debug=True)

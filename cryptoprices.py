@@ -45,4 +45,4 @@ def content_extractor(url):
         except:
             return "Invalid url"
 
-# print(content_extractor("https://sg.finance.yahoo.com/quote/DOGE-USD/history?period1=1640995200&period2=1645747200&interval=1d&filter=history&frequency=1d&includeAdjustedClose=true"))
+print(content_extractor("https://sg.finance.yahoo.com/quote/DOGE-USD/history?period1=1640995200&period2=1645747200&interval=1d&filter=history&frequency=1d&includeAdjustedClose=true"))
