@@ -8,6 +8,7 @@ import content_extract
 import sentiment
 import forms
 import datetime
+import cryptoprices
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
@@ -39,12 +40,57 @@ class Articles(db.Model):
     overall_sentiment = db.Column(db.Integer)
 
 
+class Prices(db.Model):
+    __tablename__ = "prices"
+    id = db.Column(db.Integer, primary_key=True)
+    coin_name = db.Column(db.String())
+    coin_code = db.Column(db.String())
+    date = db.Column(db.String(10))
+    open = db.Column(db.String())
+    high = db.Column(db.String())
+    low = db.Column(db.String())
+    close = db.Column(db.String())
+    adj_close = db.Column(db.String())
+    Volume = db.Column(db.String())
+
+
 db.create_all()
+
+queries = ["bitcoin", "ethereum", "dogecoin", "litecoin", "tether coin", "Binance coin", "nft"]
+
+
+def crypto_prices():
+    for i in queries[0:6]:
+        print(i)
+        data, code = cryptoprices.content_extractor("Binance coin")
+        print(data)
+        for date in data:
+            print(date)
+            open_price = data[date][0]
+            high_price = data[date][1]
+            low_price = data[date][2]
+            close_price = data[date][3]
+            adj_price = data[date][4]
+            volume_price = data[date][5]
+            price = Prices(coin_name=i, coin_code=code, date=date, open=open_price, high=high_price, low=low_price, close=close_price, adj_close=adj_price, Volume=volume_price)
+            db.session.add(price)
+            db.session.commit()
+
+
+def candlesticks(date, query):
+    details = []
+    present_data = Prices.query.filter(Prices.coin_name.contains(query), Prices.date == date).first()
+    past_data = Prices.query.filter_by(id=present_data.id - 1).first()
+    future_data = Prices.query.filter_by(id=present_data.id + 1).first()
+    details.append([future_data.date, float(str(future_data.open).replace(",", "")), float(str(future_data.high).replace(",", "")), float(str(future_data.low).replace(",", "")), float(str(future_data.close).replace(",", ""))])
+    details.append([present_data.date, float(str(present_data.open).replace(",", "")), float(str(present_data.high).replace(",", "")), float(str(present_data.low).replace(",", "")), float(str(present_data.close).replace(",", ""))])
+    details.append([past_data.date, float(str(past_data.open).replace(",", "")), float(str(past_data.high).replace(",", "")), float(str(past_data.low).replace(",", "")), float(str(past_data.close).replace(",", ""))])
+    return details
+
 
 
 def add_to_db(title, description, content, date, url, img_url, article_source, topic_related,
               main_source, title_sentiment, description_sentiment, content_sentiment, overall_sentiment):
-    content = content.replace("\n", "")
     content = content.replace("  ", "")
     content = content.replace("\t", "")
     try:
@@ -130,16 +176,16 @@ def data_extract(date, query):
                   title_sentiment, description_sentient, content_sentiment, overall_sentiment)
 
 
-queries = ["bitcoin", "ethereum", "dogecoin", "litecoin", "tether coin", "Binance coin", "nft"]
-
-
-for n in range(1,2):
-    for i in queries:
-        data_extract(f"{n}-3-2022", i)
+#
+# for n in range(4, 5):
+#     for i in queries:
+#         data_extract(f"{n}-3-2022", i)
 
 
 @app.route('/', methods=['GET', 'POST'])
 def homepage():
+    candle = [['2022-02-24', 9.5425, 9.5447, 8.2483, 9.3365], ['2022-02-25', 9.3388, 9.6207, 9.1207, 9.5752], ['2022-02-26', 9.5747, 9.7625, 9.4719, 9.5831]]
+
     dict = {}
     final_dict = {'normal': [],
                   'positive': [],
@@ -173,7 +219,7 @@ def homepage():
         for value in values:
             dict[query][value] = len(values[value])
     print(dict)
-    return render_template('index.html', data=dict)
+    return render_template('index.html', data=dict, candle=candle)
 
 
 @app.route('/table', methods=['GET', 'POST'])
@@ -186,6 +232,8 @@ def table():
                       }
         query = form.query.data
         date = form.date.data
+        candel = candlesticks(date, query)
+        print(candel)
         data = Articles.query.filter(Articles.topic_related.contains(query), Articles.date == date).all()
         for article in data:
             if article.title_sentiment == 0:
@@ -196,7 +244,8 @@ def table():
                 final_dict['negative'].append(article.title_sentiment)
         for sentiment in final_dict:
             final_dict[sentiment] = len(final_dict[sentiment])
-        return render_template('table.html', articles=data, form=form, senti=final_dict, query=query)
+
+        return render_template('table.html', articles=data, form=form, senti=final_dict, query=query, candle=candel)
     return render_template('table.html', form=form)
 
 
@@ -206,5 +255,10 @@ def article_details(id):
     return render_template('article.html', article=article)
 
 
-# if __name__ == "__main__":
-#     app.run(debug=True)
+@app.route("/trial")
+def trial():
+    return render_template("trial.html")
+
+
+if __name__ == "__main__":
+    app.run(debug=True)

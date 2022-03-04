@@ -1,0 +1,70 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+{% include "header.html" %}
+
+    <link rel="stylesheet" href="static/tables.css" />
+    <script src="https://kit.fontawesome.com/f4d4be4925.js" crossorigin="anonymous"></script>
+
+
+
+<section class="home">
+        <h1 class="text ">View Articles</h1>
+
+  <div class="container">
+  <div class="row">
+    <div class="col-6">
+
+        <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Normal',     1],
+          ['Positive',      2],
+          ['Negative', 3],
+
+        ]);
+
+        var options = {'title':'Articles)',
+        'width':700,
+        'height':400,
+        'backgroundColor': 'transparent',
+        'is3D':true
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="piechart" style="width: 650px; height: 450px;"></div>
+  </body>
+    </div>
+
+    <div class="col-6">
+
+
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+</section>
+{% include "footer.html" %}
+{% endblock %}

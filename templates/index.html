@@ -12,6 +12,9 @@
 <!--BITCOIN-->
 
   {% if data['bitcoin'] %}
+<div class="container">
+  <div class="row">
+      <div class="col-6">
 <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -58,11 +61,51 @@
       </tr>
     </table>
   </body>
+      </div>
+
+      <div class="col-6">
+    <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load('current', {'packages':['corechart']});
+          google.charts.setOnLoadCallback(drawChart);
+          function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+              ['{{ candle[0][0] }}', {{ candle[0][3] }}, {{ candle[0][1] }}, {{ candle[0][4] }}, {{ candle[0][2] }} ],
+              ['{{ candle[1][0] }}', {{ candle[1][3] }}, {{ candle[1][1] }}, {{ candle[1][4] }}, {{ candle[1][2] }} ],
+              ['{{ candle[2][0] }}', {{ candle[2][3] }}, {{ candle[2][1] }}, {{ candle[2][4] }}, {{ candle[2][2] }} ],
+            ], true);
+
+            var options = {
+              legend: 'none',
+              'backgroundColor': 'transparent',
+              candlestick: {
+                fallingColor: { strokeWidth: 0, fill: '#a52714' }, // red
+                risingColor: { strokeWidth: 0, fill: '#0f9d58' }   // green
+              }
+            };
+
+            var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div7'));
+            chart.draw(data, options);
+          }
+        </script>
+      </head>
+      <body>
+        <div id="chart_div7" style="width: 555px; height: 360px; margin:auto;"></div>
+      </body>
+      </div>
+  </div>
+</div>
+
+
 
   {% endif %}
 <!--ETHEREUM-->
 {% if data['ethereum'] %}
 
+<div class="container">
+  <div class="row">
+      <div class="col-6">
 <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -107,11 +150,52 @@
       </tr>
     </table>
   </body>
+      </div>
+
+      <div class="col-6">
+    <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load('current', {'packages':['corechart']});
+          google.charts.setOnLoadCallback(drawChart);
+          function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+              ['{{ candle[0][0] }}', {{ candle[0][3] }}, {{ candle[0][1] }}, {{ candle[0][4] }}, {{ candle[0][2] }} ],
+              ['{{ candle[1][0] }}', {{ candle[1][3] }}, {{ candle[1][1] }}, {{ candle[1][4] }}, {{ candle[1][2] }} ],
+              ['{{ candle[2][0] }}', {{ candle[2][3] }}, {{ candle[2][1] }}, {{ candle[2][4] }}, {{ candle[2][2] }} ],
+            ], true);
+
+            var options = {
+              legend: 'none',
+              'backgroundColor': 'transparent',
+              candlestick: {
+                fallingColor: { strokeWidth: 0, fill: '#a52714' }, // red
+                risingColor: { strokeWidth: 0, fill: '#0f9d58' }   // green
+              }
+            };
+
+            var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div6'));
+            chart.draw(data, options);
+          }
+        </script>
+      </head>
+      <body>
+        <div id="chart_div6" style="width: 555px; height: 360px; margin:auto;"></div>
+      </body>
+      </div>
+  </div>
+</div>
+
+
 
   {% endif %}
 <!--DoGECOIN-->
 
   {% if data['dogecoin'] %}
+
+<div class="container">
+  <div class="row">
+      <div class="col-6">
     <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -157,10 +241,50 @@
     </table>
   </body>
 
+      </div>
+
+      <div class="col-6">
+    <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load('current', {'packages':['corechart']});
+          google.charts.setOnLoadCallback(drawChart);
+          function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+              ['{{ candle[0][0] }}', {{ candle[0][3] }}, {{ candle[0][1] }}, {{ candle[0][4] }}, {{ candle[0][2] }} ],
+              ['{{ candle[1][0] }}', {{ candle[1][3] }}, {{ candle[1][1] }}, {{ candle[1][4] }}, {{ candle[1][2] }} ],
+              ['{{ candle[2][0] }}', {{ candle[2][3] }}, {{ candle[2][1] }}, {{ candle[2][4] }}, {{ candle[2][2] }} ],
+            ], true);
+
+            var options = {
+              legend: 'none',
+              'backgroundColor': 'transparent',
+              candlestick: {
+                fallingColor: { strokeWidth: 0, fill: '#a52714' }, // red
+                risingColor: { strokeWidth: 0, fill: '#0f9d58' }   // green
+              }
+            };
+
+            var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div5'));
+            chart.draw(data, options);
+          }
+        </script>
+      </head>
+      <body>
+        <div id="chart_div5" style="width: 555px; height: 360px; margin:auto;"></div>
+      </body>
+      </div>
+  </div>
+</div>
+
+
   {% endif %}
 <!--litecoin-->
 {% if data['litecoin'] %}
 
+<div class="container">
+  <div class="row">
+      <div class="col-6">
 <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -205,62 +329,51 @@
       </tr>
     </table>
   </body>
+      </div>
 
-{% endif %}
-
-<!--RIPPLE-->
-{% if data['ripple'] %}
+      <div class="col-6">
     <head>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load('current', {'packages':['corechart']});
+          google.charts.setOnLoadCallback(drawChart);
+          function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+              ['{{ candle[0][0] }}', {{ candle[0][3] }}, {{ candle[0][1] }}, {{ candle[0][4] }}, {{ candle[0][2] }} ],
+              ['{{ candle[1][0] }}', {{ candle[1][3] }}, {{ candle[1][1] }}, {{ candle[1][4] }}, {{ candle[1][2] }} ],
+              ['{{ candle[2][0] }}', {{ candle[2][3] }}, {{ candle[2][1] }}, {{ candle[2][4] }}, {{ candle[2][2] }} ],
+            ], true);
 
-      // Load Charts and the corechart package.
-      google.charts.load('current', {'packages':['corechart']});
+            var options = {
+              legend: 'none',
+              'backgroundColor': 'transparent',
+              candlestick: {
+                fallingColor: { strokeWidth: 0, fill: '#a52714' }, // red
+                risingColor: { strokeWidth: 0, fill: '#0f9d58' }   // green
+              }
+            };
 
-      google.charts.setOnLoadCallback(drawSarahChart);
-
-      google.charts.setOnLoadCallback(drawAnthonyChart);
-
-      function drawSarahChart() {
-
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
-        data.addRows([
-
-          ['normal', {{data['ripple']['normal']}}],
-          ['positive', {{data['ripple']['positive']}}],
-          ['negative',{{ data['ripple']['negative']}}],
-        ]);
-
-        var options = {title:'Ripple- ({{ data['ripple']['normal'] +  data['ripple']['positive'] + data['ripple']['negative'] }}) Articles',
-                       width:600,
-                       height:450,
-                       'backgroundColor': 'transparent',
-                       'is3D':true};
-
-        // Instantiate and draw the chart for Sarah's pizza.
-        var chart = new google.visualization.PieChart(document.getElementById('ripple_chart'));
-        chart.draw(data, options);
-      }
-
-    </script>
-  </head>
-  <body>
-    <!--Table and divs that hold the pie charts-->
-    <table class="columns">
-      <tr>
-        <td><div id="ripple_chart" ></div></td>
-      </tr>
-    </table>
-  </body>
+            var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div4'));
+            chart.draw(data, options);
+          }
+        </script>
+      </head>
+      <body>
+        <div id="chart_div4" style="width: 555px; height: 360px; margin:auto;"></div>
+      </body>
+      </div>
+  </div>
+</div>
 
 {% endif %}
+
 
 <!--TETHER COIN-->
 {% if data['tether coin'] %}
 
-
+<div class="container">
+  <div class="row">
+      <div class="col-6">
 <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -305,13 +418,53 @@
       </tr>
     </table>
   </body>
+      </div>
+
+      <div class="col-6">
+
+    <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load('current', {'packages':['corechart']});
+          google.charts.setOnLoadCallback(drawChart);
+          function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+              ['{{ candle[0][0] }}', {{ candle[0][3] }}, {{ candle[0][1] }}, {{ candle[0][4] }}, {{ candle[0][2] }} ],
+              ['{{ candle[1][0] }}', {{ candle[1][3] }}, {{ candle[1][1] }}, {{ candle[1][4] }}, {{ candle[1][2] }} ],
+              ['{{ candle[2][0] }}', {{ candle[2][3] }}, {{ candle[2][1] }}, {{ candle[2][4] }}, {{ candle[2][2] }} ],
+            ], true);
+
+            var options = {
+              legend: 'none',
+              'backgroundColor': 'transparent',
+              candlestick: {
+                fallingColor: { strokeWidth: 0, fill: '#a52714' }, // red
+                risingColor: { strokeWidth: 0, fill: '#0f9d58' }   // green
+              }
+            };
+
+            var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div3'));
+            chart.draw(data, options);
+          }
+        </script>
+      </head>
+      <body>
+        <div id="chart_div3" style="width: 555px; height: 360px; margin:auto;"></div>
+      </body>
+      </div>
+  </div>
+</div>
 
 {% endif %}
 
 <!--BINANCE-->
 
-  {% if data['Binance coin'] %}
-<head>
+{% if data['Binance coin'] %}
+
+<div class="container">
+  <div class="row">
+      <div class="col-6">
+  <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
 
@@ -356,11 +509,52 @@
     </table>
   </body>
 
-  {% endif %}
+      </div>
+
+      <div class="col-6">
+    <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load('current', {'packages':['corechart']});
+          google.charts.setOnLoadCallback(drawChart);
+          function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+              ['{{ candle[0][0] }}', {{ candle[0][3] }}, {{ candle[0][1] }}, {{ candle[0][4] }}, {{ candle[0][2] }} ],
+              ['{{ candle[1][0] }}', {{ candle[1][3] }}, {{ candle[1][1] }}, {{ candle[1][4] }}, {{ candle[1][2] }} ],
+              ['{{ candle[2][0] }}', {{ candle[2][3] }}, {{ candle[2][1] }}, {{ candle[2][4] }}, {{ candle[2][2] }} ],
+            ], true);
+
+            var options = {
+              legend: 'none',
+              'backgroundColor': 'transparent',
+              candlestick: {
+                fallingColor: { strokeWidth: 0, fill: '#a52714' }, // red
+                risingColor: { strokeWidth: 0, fill: '#0f9d58' }   // green
+              }
+            };
+
+            var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div2'));
+            chart.draw(data, options);
+          }
+        </script>
+      </head>
+      <body>
+        <div id="chart_div2" style="width: 555px; height: 360px; margin:auto;"></div>
+      </body>
+
+      </div>
+  </div>
+</div>
+
+{% endif %}
+
 <!--NFT-->
 
-  {% if data['ntf'] %}
-<head>
+{% if data['ntf'] %}
+<div class="container">
+  <div class="row">
+      <div class="col-6">
+          <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
 
@@ -404,8 +598,44 @@
       </tr>
     </table>
   </body>
+      </div>
+
+      <div class="col-6">
+                <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load('current', {'packages':['corechart']});
+          google.charts.setOnLoadCallback(drawChart);
+          function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+              ['{{ candle[0][0] }}', {{ candle[0][3] }}, {{ candle[0][1] }}, {{ candle[0][4] }}, {{ candle[0][2] }} ],
+              ['{{ candle[1][0] }}', {{ candle[1][3] }}, {{ candle[1][1] }}, {{ candle[1][4] }}, {{ candle[1][2] }} ],
+              ['{{ candle[2][0] }}', {{ candle[2][3] }}, {{ candle[2][1] }}, {{ candle[2][4] }}, {{ candle[2][2] }} ],
+            ], true);
+
+            var options = {
+              legend: 'none',
+              'backgroundColor': 'transparent',
+              candlestick: {
+                fallingColor: { strokeWidth: 0, fill: '#a52714' }, // red
+                risingColor: { strokeWidth: 0, fill: '#0f9d58' }   // green
+              }
+            };
+
+            var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+          }
+        </script>
+      </head>
+      <body>
+        <div id="chart_div" style="width: 555px; height: 360px; margin:auto;"></div>
+      </body>
+      </div>
+  </div>
+</div>
 
 {% endif %}
+
 {% endif %}
 
 </section>
