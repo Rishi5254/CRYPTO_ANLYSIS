@@ -11,3 +11,7 @@ class DataPicker(FlaskForm):
 
     submit = SubmitField('Submit')
 
+
+class Update(FlaskForm):
+    submit = SubmitField('Update Articles')
+
